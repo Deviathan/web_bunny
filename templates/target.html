@@ -1,11 +1,11 @@
 <html>
   <head>
-    <title>target</title>
+    <title>Target</title>
     <style>
       body{
       font-family: 'Courier New', Courier, monospace;
       background-color:whitesmoke;}
-      
+
       .button{
       background-color: #949699;
       border: none;
@@ -18,17 +18,17 @@
       cursor: pointer;
       font-family:'Courier New', Courier, monospace;
       }
-      
+
       .table{
       border-collapse: collapse;
       width: 60%;
       height:50%;
       border: 3px solid #949699;
-      text-align:center; 
-      margin-left:auto; 
+      text-align:center;
+      margin-left:auto;
       margin-right:auto;
       }
-            
+
       input[type=text] {
       text-align: center;
       font-size: 16px;
@@ -43,13 +43,13 @@
 
     </head>
 <body>
-<header> 
+<header>
   <table align="center">
     <tr><td><img src="/static/main.png" width="180" heigth="200"></tr></td>
-    <tr><td><h1>Web_Bunny</h1></td></tr> 
+    <tr><td><h1>Web_Bunny</h1></td></tr>
 </table>
 </header>
-<nav> 
+<nav>
  <table align="center">
      <tr>
        <td align="mid"><a href="{{url_for('index')}}"  class="button">HOME</a></td>
@@ -59,8 +59,8 @@
       </tr>
   </table>
 </nav>
-<main>  
-    <br>  
+<main>
+    <br>
       <table class="table">
         <tr><th>SELECT REQUEST TYPE:</th>
          <td><select class="button" id ="req_type">
@@ -71,13 +71,19 @@
          <option value="HEAD">HEAD</option>
          <option value="OPTIONS">OPTIONS</option>
          </select></td></tr>
-         <tr><th>SITE URL:</th><td><form class="form" name="url" id="url"><input type="text"></form></td></tr>
+         <tr><th>SITE URL:</th><td>      <form role="form" method='POST'>
+          <div class="form-group">
+            <input type="text" name="url" class="input" id="url-box" placeholder="Enter URL...">
+          </div>
+                </form></td></tr>
          <tr><th>CHANGE USER-AGENT?</th><td><select id="ua" class="button">
+         </div>
          <option value="POST">YES</option><option value="GET">NO</option></td></tr>
          <tr><th>INSERT USER-AGENT:</th>
          <td><form class="form" Name="user_agent"><input type="text"></form></td></tr>
-         <tr><td colspan="2"><button class="button" style="background-color: red">START</button></td></tr>
-        </table>    
+         <tr><td colspan="2"><button class="button" type="submit" style="background-color: red">START</button></td></tr>
+        </table>
+        <h3>{{results}}</h3>
     </main>
   </body>
 </html>

@@ -1,15 +1,27 @@
-from flask import Flask, render_template 
-
+from flask import Flask, render_template, request 
+import requests
+global version,r
+version = ("0.01")
 app=Flask(__name__)
 
-
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html",version="0.01")
+    return render_template("index.html",version=version)
 
-@app.route('/target')
+@app.route('/target' ,methods = ['POST','GET'])
 def target():
-    return render_template('target.html')
+    errors = []
+    results = {}
+    if request.method == "POST":
+        try:
+            url = request.form['url']
+            r = requests.get(url)
+            results = r.text
+        except:
+            errors.append(
+                "Unable to get URL. Please make sure it's valid and try again."
+            )
+    return render_template('target.html',errors=errors, results=results)
 
 @app.route("/history")
 def history():
@@ -29,6 +41,5 @@ def internal_server_error(e):
 
 if __name__ == '__main__':
     app.run(debug="True")
-
-
-    
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
