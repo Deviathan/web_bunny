@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request 
 import requests
+import BeautifulSoup
 global version,r
+
 version = ("0.01")
 app=Flask(__name__)
 
@@ -10,6 +12,7 @@ def index():
 
 @app.route('/target' ,methods = ['POST','GET'])
 def target():
+    a = "TRUE"
     errors = []
     results = {}
     if request.method == "POST":
