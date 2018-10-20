@@ -1,10 +1,16 @@
-from flask import Flask, render_template, request 
+from flask import Flask, render_template, request
+from forms import url_form
 import requests
 import BeautifulSoup
 global version,r
 
+
 version = ("0.01")
 app=Flask(__name__)
+app.config.update(dict(
+    SECRET_KEY="powerful secretkey",
+    WTF_CSRF_SECRET_KEY="a csrf secret key"))
+
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -12,19 +18,10 @@ def index():
 
 @app.route('/target' ,methods = ['POST','GET'])
 def target():
-    a = "TRUE"
-    errors = []
-    results = {}
-    if request.method == "POST":
-        try:
-            url = request.form['url']
-            r = requests.get(url)
-            results = r.text
-        except:
-            errors.append(
-                "Unable to get URL. Please make sure it's valid and try again."
-            )
-    return render_template('target.html',errors=errors, results=results)
+    form = url_form()
+    if form.validate_on_submit():
+        print("")
+    return render_template('target.html',form=form)
 
 @app.route("/history")
 def history():
