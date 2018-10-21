@@ -3,8 +3,10 @@
     <form method= "POST" action="">
         <table class="table">
             {{ form.hidden_tag()}}
+            <tr><th>{{ form.req.label }}</th><td>{{ form.req (class="button")}}</td></tr>
             <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td></tr>     
-            <tr><th> {{ form.c_ua.label}}</th><td>{{ form.c_ua(class ="checkmark") }}</td></tr>
+            <tr><th> {{ form.c_ua.label }}</th><td>{{ form.c_ua (class ="button") }}</td></tr>
+            <tr><th> {{ form.in_ua.label }}</th><td>{{ form.in_ua (class ="input") }}</td></tr>
             <tr><td colspan="2">{{form.execute (class ="button")}}</td></tr>
     </form>
 {%endblock content%}
