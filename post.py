@@ -3,20 +3,43 @@ import requests
 
 def post(url,cua,inua):
     try:
-        r = requests.post(url)
-        result = r.text   
-        r.raise_for_status()
+        if cua == ("YES"):
+            headers = {'user-agent': inua}
+            r = requests.post(url , headers=headers)
+            request_headers = r.request.headers
+            request_reply = r.headers
+            request_text = r.text
+            error_reply = "Null"
+
+        else:
+            r = requests.post(url)
+            request_headers = r.request.headers
+            request_reply = r.headers
+            request_text = r.text
+            error_reply = "Null"
+        #r.raise_for_status()
     except requests.exceptions.Timeout as err:
-        r = err
+        r = ""
         error = True
-        return r,error
+        request_headers =""
+        request_reply =""
+        request_text =""
+        return r , request_headers , request_reply , request_text ,error , error_reply
     except requests.exceptions.TooManyRedirects as err:
-        r = err
+        r = ""
         error = True
-        return r,error
+        request_headers =""
+        request_reply =""
+        request_text =""
+        error_reply = err
+        return r , request_headers , request_reply , request_text , error , error_reply
     except requests.exceptions.RequestException as err:
-        r = err
+        r = ""
         error = True
-        return r,error
+        request_headers =""
+        request_reply =""
+        request_text =""
+        error_reply = err
+        return r , request_headers , request_reply , request_text , error , error_reply 
     error = False
-    return r,result,error
+    return r, request_headers, request_reply, request_text, error, error_reply 

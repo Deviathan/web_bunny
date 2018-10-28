@@ -1,12 +1,26 @@
 {%extends "layout.html"%} 
+
 {% block content %}
     <form method= "POST" action="">
         <table class="table">
             {{ form.hidden_tag()}}
             <tr><th>{{ form.req.label }}</th><td>{{ form.req (class="button")}}</td></tr>
             <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td></tr>     
-            <tr><th> {{ form.c_ua.label }}</th><td>{{ form.c_ua (class ="button") }}</td></tr>
-            <tr><th> {{ form.in_ua.label }}</th><td>{{ form.in_ua (class ="input") }}</td></tr>
+            <tr><th> {{ form.c_ua.label }}</th><td>{{ form.c_ua(class ="button") }}</td></tr>
+            <tr><th> {{ form.in_ua.label }}</th><td>{{ form.in_ua  (class ="input") }}</td></tr>
+            </div>
             <tr><td colspan="2">{{form.execute (class ="button")}}</td></tr>
     </form>
-{%endblock content%}
+        </table>
+        <br>
+        <table class="tableout">
+        <tr><td align= "center"><h3>You Requested a {{req}} request on {{url}}</h3> </td></tr>
+        <tr><th>Server Response Code:</th></tr>
+        <tr><td>{{r}}</td></tr>
+        <tr><th>Request Headers:</th><tr>
+        <tr></tr><td>{{headers}}</td></tr>
+        <tr><th>Server Reply</th></tr>
+        <tr><td>{{reply}}</td></tr>
+        <tr><td>{{text}}</td></tr>
+        </table>
+{% endblock content %}
