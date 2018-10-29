@@ -1,3 +1,8 @@
+![alt text](web_bunny/static/main.png)
+
+
+
+
 # Web Bunny 
 
 Web_Bunny project created for educational purposes to learn how to use flask
