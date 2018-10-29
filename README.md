@@ -1,4 +1,4 @@
-![alt text](web_bunny/static/main.png)
+![alt text](https://github.com/Deviathan/web_bunny/blob/master/static/main.png)
 
 
 
