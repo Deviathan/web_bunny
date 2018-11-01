@@ -2,12 +2,7 @@ from flask import Flask, render_template, request , jsonify
 from forms import url_form
 
 
-from post import post
-from put import put
-from get import get
-from option import option
-from delete import delete
-from head import head
+from http_requests import post,put,get,option,delete,head
 
 import requests
 import BeautifulSoup
