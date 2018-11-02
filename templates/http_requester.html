@@ -4,6 +4,7 @@
     <form method= "POST" action="">
         <table class="table">
             {{ form.hidden_tag()}}
+            <tr><th>{{ form.c_s.label}}</th><td>{{form.c_s (class="button")}}</td></tr>
             <tr><th>{{ form.req.label }}</th><td>{{ form.req (class="button")}}</td></tr>
             <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td></tr>     
             <tr><th> {{ form.c_ua.label }}</th><td>{{ form.c_ua(class ="button") }}</td></tr>
