@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request , jsonify
-from forms import http_req_forms
+from forms import http_req_forms,href_finder
+from bs4 import BeautifulSoup
+
 from http_requests import post,put,get,option,delete,head
+from href_find import findhref
 
 import requests
-import BeautifulSoup
 
 global version,r,error,result,error_reply
 
@@ -80,14 +82,26 @@ def http_requester():
     return render_template('http_requester.html',form=form,r=error)
 
 
-@app.route("/history")
+@app.route("/history" ,methods = ['POST','GET'])
 def history():
     return render_template("history.html")
 
-@app.route("/options")
+@app.route("/options" ,methods = ['POST','GET'])
 def options():
     return render_template("options.html")
 
+@app.route("/hreffinder" ,methods = ['POST','GET'])
+def hreffinder():
+    form = href_finder()
+    global href
+    href = []
+    #if Execute button is pressed runs
+    if form.validate_on_submit():
+        url = form.url.data
+        data = findhref(url).splitlines()
+        href.extend(data)
+        
+    return render_template("href_finder.html",form = form,href=href , url = url)
 
 #error page
 @app.errorhandler(404)

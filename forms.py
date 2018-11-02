@@ -9,3 +9,7 @@ class http_req_forms(FlaskForm):
     c_ua = SelectField('Change User Agent?', choices = [('NO','NO'),('YES','YES')])
     in_ua = StringField('Insert User Agent:')
     execute = SubmitField('Execute')
+
+class href_finder(FlaskForm):
+    url = StringField('Insert URL:' ,validators = [DataRequired()])
+    execute = SubmitField('Execute')
