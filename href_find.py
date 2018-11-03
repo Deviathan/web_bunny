@@ -10,10 +10,10 @@ def findhref(url):
         for a in soup.find_all('a', href=True):
             data = data+str( a['href']+ "\n")
     except requests.exceptions.Timeout as err:
-        data = "error"
+        data = err
     except requests.exceptions.TooManyRedirects as err:
-        data = "error"
+        data = err
     except requests.exceptions.RequestException as err:
-        data = "error"
+        data = err
     
     return data

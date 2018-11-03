@@ -8,7 +8,12 @@
 
         <table class="tableout" >
         <tr align="center"><th><h3>You requested to see all hrefs on {{url}}</h3> </th></tr>
-        <tr></tr><td>{{href}}</td></tr>
+        <tr></tr>
+            <tr><td>
+            {% for href in href %}
+              <li><a href= {{href}} target="_blank">{{ href}}</a></li>
+            {% endfor %}
+            </td></tr>
 
         </table>
 

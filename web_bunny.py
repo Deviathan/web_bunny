@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request , jsonify
 from forms import http_req_forms,href_finder
 from bs4 import BeautifulSoup
+import requests
 
 from http_requests import post,put,get,option,delete,head
 from href_find import findhref
-
-import requests
 
 global version,r,error,result,error_reply
 
@@ -93,14 +92,14 @@ def options():
 @app.route("/hreffinder" ,methods = ['POST','GET'])
 def hreffinder():
     form = href_finder()
-    global href
+    global href,url
+    url = ""
     href = []
     #if Execute button is pressed runs
     if form.validate_on_submit():
         url = form.url.data
         data = findhref(url).splitlines()
         href.extend(data)
-        
     return render_template("href_finder.html",form = form,href=href , url = url)
 
 #error page
