@@ -20,8 +20,8 @@ To be able to run Web_bunny:
 
 * [Flask](http://flask.pocoo.org/) - The web framework used
 * [Flask-WTF](https://flask-wtf.readthedocs.io/en/stable/) 
-* [Requests](http://docs.python-requests.org) - Used For the Http Requests
-
+* [Requests](http://docs.python-requests.org) - Used for the Http Requests
+* [Beautifulsoup](https://www.crummy.com/software/BeautifulSoup/) - Used for scraping data from websites 
 
 
 
