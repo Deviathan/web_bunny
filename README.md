@@ -11,10 +11,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Installation
 
-To be able to run Web_bunny 
+To be able to run Web_bunny:
 * git clone https://github.com/Deviathan/web_bunny.git
 * cd web_bunny
-* pip install -r requirements.txt [requirements.txt](requirements.txt)
+* pip install -r [requirements.txt](requirements.txt)
 
 ## Built With
 
