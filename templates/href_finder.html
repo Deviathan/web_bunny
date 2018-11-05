@@ -1,20 +1,22 @@
 {%extends "layout.html"%} 
 {%block content%}
+<br>
 <form method= "POST" action="">
-    <table class="table">
+    <table class="tablehref">
         {{ form.hidden_tag()}}
         <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td><td>{{form.execute (class ="button")}}</td></tr>     
         </table>
+        <br>
+        <div class=divout>
 
         <table class="tableout" >
         <tr align="center"><th><h3>You requested to see all hrefs on {{url}}</h3> </th></tr>
-        <tr></tr>
-            <tr><td>
+        <tr><td>
             {% for href in href %}
               <li><a href= {{href}} target="_blank">{{ href}}</a></li>
             {% endfor %}
             </td></tr>
-
         </table>
+    </div>
 
 {%endblock content%}

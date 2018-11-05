@@ -5,8 +5,9 @@
 <style>
       body{
       font-family: 'Courier New', Courier, monospace;
-      background-color:whitesmoke;}
-      
+      background-color:whitesmoke;
+      overflow-x: hidden;
+      }
       .button{
       background-color: #949699;
       border: none;
@@ -16,10 +17,38 @@
       display: inline-block;
       font-size: 16px;
       margin: 4px 2px;
-      cursor: pointer;
+      text-decoration: none;
       font-family:'Courier New', Courier, monospace;
       }
-      
+
+      .button_menu{
+      text-transform: uppercase;
+      background: #949699;
+      color:white;
+      padding: 20px;
+      display: inline-block;
+      border: none;
+      font-family: 'Courier New', Courier, monospace;
+      text-decoration: none;
+      }
+      .button_menu:visited{
+      text-transform: uppercase;
+      background: #949699;
+      color:white;
+      padding: 20px;
+      display: inline-block;
+      border: none;
+      font-family: 'Courier New', Courier, monospace;
+      text-decoration: none;
+      }
+
+      .button_menu:hover {
+      text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+      -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+      transition: all 0.4s ease 0s;
+    }
+
       .table{
       border-collapse: collapse;
       width: 80%;
@@ -29,15 +58,30 @@
       margin-left:auto; 
       margin-right:auto;
       }
+
+      .tablehref{
+      width: 40%;
+      height:10%;
+      border: 3px solid #949699;
+      text-align:center; 
+      margin-left:auto; 
+      margin-right:auto;
+      }
+
       .tableout{
       text-align: left;
-      padding: 15px;
       border: 4px solid #949699;
       margin-left:auto; 
       margin-right:auto;
       width:100%;
+      height:50%;
       }
-            
+  
+      .divout{
+        width:100%;
+        height:55%;
+        overflow:scroll;
+      } 
       input[type=text] {
       text-align: center;
       font-size: 16px;
@@ -65,11 +109,11 @@
  <nav> 
   <table align="center">
       <tr>
-       <td align="mid"><a href="{{url_for('index')}}"  class="button">HOME</a></td>
-       <td align="mid"><a href="{{url_for('http_requester')}}" class="button">HTTP REQUESTER</a></td>
-        <td align="mid"><a href="{{url_for('hreffinder')}}" class="button">HREF FINDER</a> </td>
-       <td align="mid"><a href="{{url_for('history')}}" class="button">HISTORY</a></td>
-       <td align="mid"><a href="{{url_for('options')}}" class="button">OPTIONS</a></td>
+       <td align="mid"><a href="{{url_for('index')}}"  class="button_menu">HOME</a></td>
+       <td align="mid"><a href="{{url_for('http_requester')}}" class="button_menu">HTTP REQUESTER</a></td>
+        <td align="mid"><a href="{{url_for('hreffinder')}}" class="button_menu">HREF FINDER</a> </td>
+       <td align="mid"><a href="{{url_for('history')}}" class="button_menu">HISTORY</a></td>
+       <td align="mid"><a href="{{url_for('options')}}" class="button_menu">OPTIONS</a></td>
       </tr>
       </table>
   </nav>
