@@ -27,8 +27,9 @@ def index():
 def http_requester():
     #gets input from forms (forms.py)/http_requester.html
     form = http_req_forms()
-    #if Execute button is pressed runs
+    #When Execute button is pressed :
     if form.validate_on_submit():
+        but = True 
         c_s = form.c_s.data
         request_type = form.req.data
         url = form.url.data
@@ -42,42 +43,42 @@ def http_requester():
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
         #calling get request (get.py)
         if (request_type=='GET'):       
             r,request_headers,request_reply,request_text,error,error_reply= get(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
         #calling put request (put.py)
         if (request_type=='PUT'):
             r,request_headers,request_reply,request_text,error,error_reply= put(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
         #calling delete request (delete.py)
         if (request_type=='DELETE'):
             r,request_headers,request_reply,request_text,error,error_reply= delete(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
         #calling head request (head.py)
         if (request_type=='HEAD'):
             r,request_headers,request_reply,request_text,error,error_reply= head(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
         #calling options request (option.py)
         if (request_type=='OPTIONS'):
             r,request_headers,request_reply,request_text,error,error_reply= option(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
     return render_template('http_requester.html',form=form,r=error)
 
 
@@ -92,15 +93,17 @@ def options():
 @app.route("/hreffinder" ,methods = ['POST','GET'])
 def hreffinder():
     form = href_finder()
-    global href,url
+    global href,url,buthref
+    buthref = False
     url = ""
     href = []
-    #if Execute button is pressed runs
+    #When Execute button is pressed :
     if form.validate_on_submit():
+        buthref = True 
         url = form.url.data
         data = findhref(url).splitlines()
         href.extend(data)
-    return render_template("href_finder.html",form = form,href=href , url = url)
+    return render_template("href_finder.html",form = form,href=href , url = url,but=buthref)
 
 #error page
 @app.errorhandler(404)

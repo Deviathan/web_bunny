@@ -7,8 +7,9 @@
         <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td><td>{{form.execute (class ="button")}}</td></tr>     
         </table>
         <br>
-        <div class=divout>
+{% if but == True %}
 
+        <div class=divout>
         <table class="tableout" >
         <tr align="center"><th><h3>You requested to see all hrefs on {{url}}</h3> </th></tr>
         <tr><td>
@@ -18,5 +19,6 @@
             </td></tr>
         </table>
     </div>
+{% endif %} 
 
 {%endblock content%}
