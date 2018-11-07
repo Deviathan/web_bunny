@@ -1,14 +1,11 @@
 from flask import Flask, render_template, request , jsonify
 from forms import http_req_forms,href_finder
-from bs4 import BeautifulSoup
-import requests
-
 from http_requests import post,put,get,option,delete,head
 from href_find import findhref
 
-global version,r,error,result,error_reply
+global version, r, error, result, error_reply
 
-request_headers , request_reply , request_text, error_reply = "","","",""
+request_headers , request_reply , request_text, error_reply = "", "", "", ""
 
 error = False
 
@@ -21,15 +18,15 @@ app.config.update(dict(
 #index page
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("index.html",version=version)
+    return render_template("index.html", version=version)
 
-@app.route('/http_requester' ,methods = ['POST','GET'])
+@app.route('/http_requester' , methods = ['POST','GET'])
 def http_requester():
-    #gets input from forms (forms.py)/http_requester.html
+    # gets input from forms (forms.py)/http_requester.html
     form = http_req_forms()
-    #When Execute button is pressed :
+    # When Execute button is clicked :
     if form.validate_on_submit():
-        but = True 
+        button_press = True #gives jinja information if button is clicked
         c_s = form.c_s.data
         request_type = form.req.data
         url = form.url.data
@@ -37,73 +34,73 @@ def http_requester():
         inua = form.in_ua.data
         global error , request_headers , request_reply , request_text , error_reply
 
-        #calling post request (post.py)
+        #Calls Requests (from http_request.py)
+
+        # POST REQUEST
         if (request_type=='POST'):
             r,request_headers,request_reply,request_text,error,error_reply= post(c_s,url,cua,inua)
             if (error == True):
-                return render_template('http_requester.html',form=form,r=error_reply)
+                return render_template('http_requester.html', form=form, r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-        #calling get request (get.py)
+                return render_template('http_requester.html', r=r, form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type, but=button_press)
+        #GET REQUEST
         if (request_type=='GET'):       
             r,request_headers,request_reply,request_text,error,error_reply= get(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-        #calling put request (put.py)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type, but=button_press)
+        #PUT REQUEST
         if (request_type=='PUT'):
             r,request_headers,request_reply,request_text,error,error_reply= put(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-        #calling delete request (delete.py)
+                return render_template('http_requester.html' ,r=r, form=form, headers = request_headers, reply = request_reply , text = request_text, url=url, req=request_type, but=button_press)
+        #DELETE REQUEST
         if (request_type=='DELETE'):
             r,request_headers,request_reply,request_text,error,error_reply= delete(c_s,url,cua,inua)
             if (error == True):
-                return render_template('http_requester.html',form=form,r=error_reply)
+                return render_template('http_requester.html', form=form, r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-        #calling head request (head.py)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply , text = request_text, url=url, req=request_type, but=button_press)
+        #HEAD REQUEST
         if (request_type=='HEAD'):
             r,request_headers,request_reply,request_text,error,error_reply= head(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-        #calling options request (option.py)
+                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply , text = request_text, url=url, req=request_type, but=button_press)
+        #OPTION REQUEST
         if (request_type=='OPTIONS'):
             r,request_headers,request_reply,request_text,error,error_reply= option(c_s,url,cua,inua)
             if (error == True):
                 return render_template('http_requester.html',form=form,r=error_reply)
             elif(error == False):
-                return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-    return render_template('http_requester.html',form=form,r=error)
+                return render_template('http_requester.html', r=r, form=form, headers = request_headers, reply = request_reply , text = request_text, url=url, req=request_type, but=button_press)
+    return render_template('http_requester.html', form=form ,r=error)
 
 
-@app.route("/history" ,methods = ['POST','GET'])
+@app.route("/history" , methods = ['POST','GET'])
 def history():
     return render_template("history.html")
 
-@app.route("/options" ,methods = ['POST','GET'])
+@app.route("/options" , methods = ['POST','GET'])
 def options():
     return render_template("options.html")
 
-@app.route("/hreffinder" ,methods = ['POST','GET'])
+@app.route("/hreffinder" , methods = ['POST','GET'])
 def hreffinder():
     form = href_finder()
-    global href,url,buthref
-    buthref = False
-    url = ""
-    href = []
+    global url,button_press
+    button_press = False  #gives jinja information if button is clicked
+    url = data = ""
     #When Execute button is pressed :
     if form.validate_on_submit():
-        buthref = True 
+        button_press = True 
         url = form.url.data
-        data = findhref(url).splitlines()
-        href.extend(data)
-    return render_template("href_finder.html",form = form,href=href , url = url,but=buthref)
+        data = findhref(url)
+    return render_template("href_finder.html", form=form, href=data , url = url, but=button_press)
 
 #error page
 @app.errorhandler(404)
