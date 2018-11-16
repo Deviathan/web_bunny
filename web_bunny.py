@@ -102,6 +102,17 @@ def hreffinder():
         data = findhref(url)
     return render_template("href_finder.html", form=form, href=data , url = url, but=button_press)
 
+@app.route("/cms_detection" , methods = ['POST','GET'])
+def cms_detection():
+    form = href_finder()
+    global url,button_press
+    button_press = False  #gives jinja information if button is clicked
+    url = data = ""
+    #When Execute button is pressed :
+    if form.validate_on_submit():
+        print("")
+    return render_template("cms_detection.html", form=form, href=data , url = url, but=button_press)
+
 #error page
 @app.errorhandler(404)
 def page_not_found(e):

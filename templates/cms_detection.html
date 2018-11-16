@@ -1,0 +1,10 @@
+{%extends "layout.html"%} 
+{%block content%}
+<br>
+<form method= "POST" action="">
+    <table class="tablehref">
+        {{ form.hidden_tag()}}
+        <tr><th>{{ form.url.label }}</th><td>{{ form.url (class ="input") }}</td><td>{{form.execute (class ="button")}}</td></tr>     
+        </table>
+
+{%endblock content%}
