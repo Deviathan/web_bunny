@@ -1,361 +1,394 @@
 import requests
 
-def post(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.post(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-
-            else:
-                s = requests.Session()
-                r = s.post(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.post(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-
-            else:
-                r = requests.post(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
+def http_requests(c_s,request_type,url,cua,inua):
+    global r, error, result, error_reply 
     error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+    request_headers , request_reply , request_text, error_reply , r , result = "", "", "", "", "" , ""
+    
+    #checks the url if http:// or https:// is inserted 
+    if url.startswith('http://') or url.startswith('https://'):
+        url = url
+    #if its not it adds http:// to the prefix of the url 
+    else:
+        prefix = 'http://' 
+        url = prefix + url
 
-def get(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.get(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+    #POST REQUEST
+    if request_type == "POST":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.post(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                s = requests.Session()
-                r = s.get(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.get(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+                else:
+                    s = requests.Session()
+                    r = s.post(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.post(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                r = requests.get(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
-    error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+                else:
+                    r = requests.post(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
 
-def put(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.put(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+    #GET REQUEST
+    if request_type == "GET":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.get(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                s = requests.Session()
-                r = s.put(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.post(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+                else:
+                    s = requests.Session()
+                    r = s.get(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.get(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                r = requests.put(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
-    error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+                else:
+                    r = requests.get(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply 
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
 
-def delete(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.delete(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+    #PUT REQUEST
+    if request_type == "PUT":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.put(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                s = requests.Session()
-                r = s.delete(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.delete(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+                else:
+                    s = requests.Session()
+                    r = s.put(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.post(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                r = requests.delete(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
-    error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+                else:
+                    r = requests.put(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply 
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
 
-def head(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.head(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+    #DELETE REQUEST
+    if request_type == "DELETE":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.delete(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                s = requests.Session()
-                r = s.head(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.head(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+                else:
+                    s = requests.Session()
+                    r = s.delete(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.delete(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                r = requests.head(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
-    error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+                else:
+                    r = requests.delete(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply 
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
 
-def option(c_s,url,cua,inua):
-    try:
-        if c_s == ("YES"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                s = requests.Session()
-                r = s.options(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
 
-            else:
-                s = requests.Session()
-                r = s.options(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-        elif c_s == ("NO"):
-            if cua == ("YES"):
-                headers = {'user-agent': inua}
-                r = requests.options(url , headers=headers)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
+    #HEAD REQUEST
+    if request_type == "HEAD":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.head(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
 
-            else:
-                r = requests.options(url)
-                request_headers = r.request.headers
-                request_reply = r.headers
-                request_text = r.text
-                error_reply = "Null"
-    except requests.exceptions.Timeout as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        return r , request_headers , request_reply , request_text ,error , error_reply
-    except requests.exceptions.TooManyRedirects as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply
-    except requests.exceptions.RequestException as err:
-        r = ""
-        error = True
-        request_headers =""
-        request_reply =""
-        request_text =""
-        error_reply = err
-        return r , request_headers , request_reply , request_text , error , error_reply 
-    error = False
-    return r, request_headers, request_reply, request_text, error, error_reply 
+                else:
+                    s = requests.Session()
+                    r = s.head(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.head(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+
+                else:
+                    r = requests.head(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply 
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
+
+
+    #OPTIONS REQUEST
+    if request_type == "OPTIONS":
+        try:
+            #SESSION
+            if c_s == ("YES"):
+                #USER AGENT
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    s = requests.Session()
+                    r = s.options(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+
+                else:
+                    s = requests.Session()
+                    r = s.options(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+            elif c_s == ("NO"):
+                if cua == ("YES"):
+                    headers = {'user-agent': inua}
+                    r = requests.options(url , headers=headers)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+
+                else:
+                    r = requests.options(url)
+                    request_headers = r.request.headers
+                    request_reply = r.headers
+                    request_text = r.text
+                    error_reply = "Null"
+        except requests.exceptions.Timeout as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            return r , request_headers , request_reply , request_text ,error , error_reply
+        except requests.exceptions.TooManyRedirects as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply
+        except requests.exceptions.RequestException as err:
+            r = ""
+            error = True
+            request_headers =""
+            request_reply =""
+            request_text =""
+            error_reply = err
+            return r , request_headers , request_reply , request_text , error , error_reply 
+        error = False
+        return r, request_headers, request_reply, request_text, error, error_reply 
+        

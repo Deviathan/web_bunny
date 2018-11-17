@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 
 def findhref(url):
+    if url.startswith('http://') or url.startswith('https://'):
+        url = url
+    else:
+        prefix = 'http://'
+        url = prefix + url   
     try:
         r = requests.get(url)
         html = r.content
@@ -10,9 +15,7 @@ def findhref(url):
         href = []
         for a in soup.find_all('a', href=True):
             data = data+str( a['href']+ "\n")
-        data=data.splitlines()
         href.extend(data)
-
     except requests.exceptions.Timeout as err:
         data = err
     except requests.exceptions.TooManyRedirects as err:
