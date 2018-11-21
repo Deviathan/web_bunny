@@ -14,16 +14,21 @@
     </form>
         </table>
         <br>
+
         {% if but == True %}
+    <div class="divout" >
         <table class="tableout">
         <tr><td align= "center"><h3>You Requested a {{req}} request on {{url}}</h3> </td></tr>
         <tr><th>Server Response Code:</th></tr>
         <tr><td>{{r}}</td></tr>
+        <tr><th>Encoding:</th></tr>
+        <tr><td>{{encoding}}</td></tr>
         <tr><th>Request Headers:</th><tr>
         <tr></tr><td>{{headers}}</td></tr>
         <tr><th>Server Reply:</th></tr>
         <tr><td>{{reply}}</td></tr>
         <tr><td>{{text}}</td></tr>
         </table>
+    </div>
         {% endif %}
 {% endblock content %}

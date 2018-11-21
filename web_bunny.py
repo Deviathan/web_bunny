@@ -34,14 +34,13 @@ def http_requester():
         url = form.url.data
         cua = form.c_ua.data
         inua = form.in_ua.data
-        global error , request_headers , request_reply , request_text , error_reply , r
+        global error , request_headers , request_reply , request_text,request_encoding  , r
         #http_requests.py
-        r,request_headers,request_reply,request_text,error,error_reply= http_requests(c_s,request_type,url,cua,inua)
+        r,request_headers,request_reply,request_text,request_encoding,error= http_requests(c_s,request_type,url,cua,inua)
         if (error == True):
-            return render_template('http_requester.html',form=form,r=error_reply)
+            return render_template('http_requester.html',form=form,r=r)
         elif(error == False):
-            return render_template('http_requester.html',r=r,form=form, headers = request_headers, reply = request_reply ,text = request_text, url=url, req=request_type,but=but)
-
+            return render_template('http_requester.html',r=r,form=form, headers = request_headers,encoding=request_encoding,text = request_text, reply = request_reply, url=url, req=request_type,but=but)
     return render_template('http_requester.html',form=form,r=error)
 
 #/href_finder
